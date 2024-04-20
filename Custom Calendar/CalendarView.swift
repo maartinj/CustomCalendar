@@ -5,6 +5,9 @@
 //  Created by Marcin Jędrzejak on 20/04/2024.
 //
 
+// Link part 1: https://www.youtube.com/watch?v=X_boPC1tg_Y&ab_channel=StewartLynch
+// Link part 2: https://www.youtube.com/watch?v=tJC7izUkm8k&ab_channel=StewartLynch
+
 import SwiftUI
 
 struct CalendarView: View {

@@ -8,14 +8,26 @@
 import Foundation
 
 extension Date {
+    static var firstDayOfWeek = Calendar.current.firstWeekday
     static var capitalizedFirstLettersOfWeekdays: [String] {
         let calendar = Calendar.current
-        let weekdays = calendar.shortWeekdaySymbols
+//        let weekdays = calendar.shortWeekdaySymbols
         
-        return weekdays.map { weekday in
-            guard let firstLetter = weekday.first else { return "" }
-            return String(firstLetter).capitalized
+//        return weekdays.map { weekday in
+//            guard let firstLetter = weekday.first else { return "" }
+//            return String(firstLetter).capitalized
+//        }
+        // Adjusted for the different weekday starts
+        var weekdays = calendar.shortWeekdaySymbols
+        if firstDayOfWeek > 1 {
+            for _ in 1..<firstDayOfWeek {
+                if let first = weekdays.first {
+                    weekdays.append(first)
+                    weekdays.removeFirst()
+                }
+            }
         }
+        return weekdays.map { $0.capitalized }
     }
     
     static var fullMonthNames: [String] {
@@ -47,9 +59,16 @@ extension Date {
         Calendar.current.component(.day, from: endOfMonth)
     }
 
-    var sundayBeforeStart: Date {
-        let startOfMonthWeekday = Calendar.current.component(.weekday, from: startOfMonth)
-        let numberFromPreviousMonth = startOfMonthWeekday - 1
+//    var sundayBeforeStart: Date {
+//        let startOfMonthWeekday = Calendar.current.component(.weekday, from: startOfMonth)
+//        let numberFromPreviousMonth = startOfMonthWeekday - 1
+//        return Calendar.current.date(byAdding: .day, value: -numberFromPreviousMonth, to: startOfMonth)!
+//    }
+
+    // New to accomodate for different start of week days
+    var firstWeekDayBeforeStart: Date {
+        let startMonthWeekday = Calendar.current.component(.weekday, from: startOfMonth)
+        let numberFromPreviousMonth = startMonthWeekday - Self.firstDayOfWeek
         return Calendar.current.date(byAdding: .day, value: -numberFromPreviousMonth, to: startOfMonth)!
     }
 
@@ -66,7 +85,8 @@ extension Date {
             days.append(newDay!)
         }
 
-        return days.filter { $0 >= sundayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
+//        return days.filter { $0 >= sundayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
+        return days.filter { $0 >= firstWeekDayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
     }
 
     var monthInt: Int {
