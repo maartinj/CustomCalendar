@@ -53,10 +53,10 @@ struct CalendarView: View {
         }
         .padding()
         .onAppear {
-            days = date.calendarDisplayDates
+            days = date.calendarDisplayDays
         }
         .onChange(of: date) {
-            days = date.calendarDisplayDates
+            days = date.calendarDisplayDays
         }
     }
 }
