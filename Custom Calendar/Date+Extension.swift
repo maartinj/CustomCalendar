@@ -72,4 +72,8 @@ extension Date {
     var monthInt: Int {
         Calendar.current.component(.month, from: self)
     }
+
+    var startOfDay: Date {
+        Calendar.current.startOfDay(for: self)
+    }
 }

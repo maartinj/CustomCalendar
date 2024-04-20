@@ -41,7 +41,7 @@ struct CalendarView: View {
                             .background(
                                 Circle()
                                     .foregroundStyle(
-                                        color.opacity(0.3)
+                                        Date.now.startOfDay == day.startOfDay ? .red.opacity(0.3) : color.opacity(0.3)
                                     )
                             )
                     }
