@@ -68,4 +68,8 @@ extension Date {
 
         return days.filter { $0 >= sundayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
     }
+
+    var monthInt: Int {
+        Calendar.current.component(.month, from: self)
+    }
 }
